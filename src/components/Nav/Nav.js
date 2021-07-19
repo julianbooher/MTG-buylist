@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import Icon04 from "../../logos/Icons-04.png";
+import mtgIcon from "../../logos/mtg-favicon.png";
 
 
 export default function Nav() {
@@ -25,7 +25,7 @@ export default function Nav() {
     <>
     <div className="nav">
       <Link to="/home">
-        <img className="rf-logo" src={Icon04} alt="RF Logo"></img>
+        <img className="rf-logo" src={mtgIcon} alt="RF Logo"></img>
       </Link>
       
       <div className="nav-right">

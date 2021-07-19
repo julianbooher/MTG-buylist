@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './RegisterForm.css'
 import {Form, Container, Button} from 'react-bootstrap';
-import {formatPhone} from '../Hooks/Hooks.jsx';
 
 
 export default function RegisterForm() {
@@ -10,11 +9,6 @@ export default function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [orgName, setOrgName] = useState('');
-  const [background, setBackground] = useState('');
-  const [phone, setPhone] = useState('');
-  const [contactName, setContactName] = useState('');
-
 
   const registrationMessage = useSelector(state => state.errors.registrationMessage);
 
@@ -23,17 +17,12 @@ export default function RegisterForm() {
     event.preventDefault();
     if (password !== passwordConfirm){
       dispatch({type: 'PASSWORD_DOES_NOT_MATCH'})
-    } else if (username && password && passwordConfirm && orgName && background && phone && contactName){
-      setPhone(formatPhone(phone));
+    } else if (username && password && passwordConfirm){
       dispatch({
         type: 'REGISTER',
         payload: {
           username: username,
           password: password,
-          orgName: orgName,
-          background: background,
-          phone: phone,
-          contactName: contactName
         },
       });
     } 
@@ -98,63 +87,6 @@ export default function RegisterForm() {
           />
         </Form.Group>
         
-        <Form.Group>
-          <Form.Label htmlFor="phone">
-            Phone Number
-            <br></br>
-          </Form.Label>
-          <Form.Control
-            className="register"
-            type="text"
-            name="phone"
-            value={phone}
-            required
-            onChange={event => setPhone(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label htmlFor="contactName">
-            Contact Name
-            <br></br>
-          </Form.Label>
-          <Form.Control
-            className="register"
-            type="text"
-            name="Contact Name"
-            value={contactName}
-            required
-            onChange={event => setContactName(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label htmlFor="orgName">
-            Organization Name
-            <br></br>
-          </Form.Label>
-          <Form.Control
-            className="register"
-            type="text"
-            name="Organization Name"
-            value={orgName}
-            required
-            onChange={event => setOrgName(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label htmlFor="background">
-            Organization Background
-            <br></br>
-          </Form.Label>
-          <Form.Control
-            className="register"
-            as="textarea"
-            rows={10}
-            name="Organization Background"
-            value={background}
-            required
-            onChange={event => setBackground(event.target.value)}
-          />
-        </Form.Group>
         <Form.Group style={{textAlign: 'center'}}>
           <Button 
             className="btn" 

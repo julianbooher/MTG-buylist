@@ -11,21 +11,11 @@ import { connect } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import AdminRoute from '../AdminRoute/AdminRoute';
-import UserPage from '../UserPage/UserPage.jsx';
+// import AdminRoute from '../AdminRoute/AdminRoute';
 import LandingPage from '../LandingPage/LandingPage.jsx';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import Admin from '../Admin/Admin.jsx';
-import GrantWindowSettings from '../GrantWindowSettings/GrantWindowSettings.jsx';
-import AppDetails from '../AppDetails/AppDetails.jsx';
-import QuestionManagement from '../QuestionManagement/QuestionManagement.jsx';
-import PrintableReport from '../PrintableReport/PrintableReport.jsx';
-import GreetingManagement from '../GreetingManagement/GreetingManagement.jsx';
-import RegisterPageCE from '../CommunityEngagement/RegisterPageCE/RegisterPageCE'
-import AppDetailsCE from '../CommunityEngagement/AppDetailsCE/AppDetailsCE.jsx';
-import PrintableReportCE from '../CommunityEngagement/PrintableReportCE/PrintableReportCE.jsx';
-import PreviousApplications from '../PreviousApplications/PreviousApplications.jsx'
+import UserHome from '../UserHome/UserHome.jsx'
 
 
 import './App.css';
@@ -33,7 +23,6 @@ import './App.css';
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
-    this.props.dispatch({ type: 'FETCH_CURRENT_WINDOW'})
   }
 
   render() {
@@ -54,7 +43,7 @@ class App extends Component {
               exact
               path="/user"
               adminRedirect="/admin"
-              component={UserPage}
+              component={UserHome}
             />
 
             {/* When a value is supplied for the authRedirect prop the user will
@@ -82,17 +71,7 @@ class App extends Component {
               authRedirect="/user"
               adminRedirect="/admin"
             />
-            <ProtectedRoute
-              // with authRedirect:
-              // - if logged in, redirects to "/user"
-              // - if admin, redirect to "/admin"
-              // - else shows RegisterPage at "/registration"
-              exact
-              path="/ceregistration"
-              component={RegisterPageCE}
-              authRedirect="/user"
-              adminRedirect="/admin"
-            />
+
             <ProtectedRoute
               // with authRedirect:
               // - if logged in, redirects to "/user"
@@ -104,77 +83,7 @@ class App extends Component {
               authRedirect="/user"
               adminRedirect="/admin"
             />
-            <ProtectedRoute
-              // logged in shows UserPage else shows LoginPage
-              exact
-              path="/applications"
-              adminRedirect="/admin"
-              component={PreviousApplications}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/admin"
-              component={Admin}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/grantwindow"
-              component={GrantWindowSettings}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/appdetails/:id"
-              component={AppDetails}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/report/:id"
-              component={PrintableReport}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/questionmanagement"
-              component={QuestionManagement}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/greetingmanagement"
-              component={GreetingManagement}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/ce/appdetails/:id"
-              component={AppDetailsCE}
-            />
-            <AdminRoute
-              // AdminRoute ensures the user is an admin
-              // if not logged in, redirects to login
-              // if logged in but not admin, redirects to user homepage
-              exact
-              path="/ce/report/:id"
-              component={PrintableReportCE}
-            />
+
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
