@@ -25,7 +25,7 @@ export default function Nav() {
     <>
     <div className="nav">
       <Link to="/home">
-        <img className="rf-logo" src={mtgIcon} alt="RF Logo"></img>
+        <img className="mtg-logo" src={mtgIcon} alt="RF Logo"></img>
       </Link>
       
       <div className="nav-right">

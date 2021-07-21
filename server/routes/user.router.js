@@ -36,15 +36,12 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  const orgName = req.body.orgName;
-  const background = req.body.background;
-  const phone = req.body.phone;
-  const contactName = req.body.contactName;
 
-  const queryText = `INSERT INTO "user" (username, password, org_name, background, phone, contact_name)
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
+
+  const queryText = `INSERT INTO "user" (username, password)
+    VALUES ($1, $2) RETURNING id`;
   pool
-    .query(queryText, [username, password, orgName, background, phone, contactName])
+    .query(queryText, [username, password])
     .then(() => res.sendStatus(201))
     .catch((err) => {
       console.log('User registration failed: ', err);
@@ -52,29 +49,6 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-// Handles POST request with new user data for community engagement registration
-router.post('/ce/register', (req, res, next) => {
-  // validate email on client AND in post route so postman can't get around verification
-  if (validateEmail(req.body.username)){
-    const username = req.body.username;
-    const password = encryptLib.encryptPassword(req.body.password);
-    const orgName = req.body.orgName;
-    const phone = req.body.phone;
-    const contactName = req.body.contactName;
-  
-    const queryText = `INSERT INTO "user" (username, password, org_name, phone, contact_name, remax_employee)
-      VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
-    pool
-      .query(queryText, [username, password, orgName, phone, contactName, true])
-      .then(() => res.sendStatus(201))
-      .catch((err) => {
-        console.log('User registration failed: ', err);
-        res.sendStatus(500);
-      });
-  } else {
-    res.sendStatus(500);
-  }
-});
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
