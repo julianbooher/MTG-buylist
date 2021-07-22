@@ -15,10 +15,10 @@ export default function RegisterPage() {
         <Row>
           <Card>
             <Card.Header className="register-header">
-              <h2>Welcome to the Results Foundation Application Portal!</h2>
+              <h2>Welcome to MTG Buylist</h2>
             </Card.Header>
             <Card.Body className="register-sub-header">
-              <h4>Please take a moment to register your organization with us before moving on to the grant application</h4>
+              <h4>Please take a moment to create an account before using the buylist feature.</h4>
             </Card.Body>
           </Card>
         </Row>
