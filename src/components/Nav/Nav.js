@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
@@ -8,8 +8,6 @@ import mtgIcon from "../../logos/mtg-favicon.png";
 
 export default function Nav() {
   const user = useSelector(state => state.user);
-  const location = useLocation();
-  const currentPath = location.pathname;
 
   let loginLinkData = {
     path: '/login',
