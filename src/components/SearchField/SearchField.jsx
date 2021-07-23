@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import mapStoreToProps from '../../redux/mapStoreToProps';
 import { Form, Button } from 'react-bootstrap';
 
 
-function SearchField(props) {
+export default function SearchField(props) {
 
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -39,5 +37,3 @@ function SearchField(props) {
     </div>
   );
 }
-
-export default connect(mapStoreToProps)(SearchField);
