@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 import SearchField from '../SearchField/SearchField.jsx'
+import SearchResults from '../SearchResults/SearchResults.jsx';
 
 
 function UserHome(props) {
@@ -10,6 +11,7 @@ function UserHome(props) {
     <div>
       <h2>User Home</h2>
       <SearchField />
+      <SearchResults />
     </div>
   );
 }
