@@ -4,19 +4,13 @@ const axios = require('axios');
 const router = express.Router();
 require('dotenv').config();
 
-// Get list of MTG sets and update the database. 
-router.get('/', (req, res) => {
 
-    // Environment variables for the API request.
+function updateSets(i, req, res){
+
     const version = process.env.version;
     const accessToken = process.env.accessToken;
-    const publicId = process.env.publicId;
-    const privateId = process.env.privateId;
-    console.log('inside mtgSetUpdate router');
-    let offset = 0;
-
-    const sqlText = `INSERT INTO set (id, name) VALUES ($1, $2)`;
-    axios.get(`https://api.tcgplayer.com/${version}/catalog/categories/1/groups?limit=1000&offset=${offset}`,{
+    
+    axios.get(`https://api.tcgplayer.com/${version}/catalog/categories/1/groups?limit=1000&offset=${100*i}`,{
         "headers": {
             "Authorization": `Bearer ${accessToken}`
         }
@@ -29,6 +23,16 @@ router.get('/', (req, res) => {
         console.log('Error inside GET request in mtgSetUpdate', error);
         res.sendStatus(500);
     })
+}
+
+// Get list of MTG sets and update the database. 
+router.get('/', (req, res) => {
+
+    // Environment variables for the API request.
+    const insertText = "INSERT INTO expansion (id, name) VALUES ($1, $2)"
+    console.log('inside mtgSetUpdate router');
+    updateSets(0, req, res);
+
     
 });
 
