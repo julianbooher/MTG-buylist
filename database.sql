@@ -10,3 +10,7 @@ CREATE TABLE "user" (
   "admin" boolean DEFAULT false
 );
 
+CREATE TABLE "expansion" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR UNIQUE NOT NULL
+);
