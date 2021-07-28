@@ -13,15 +13,16 @@ router.get('/', (req, res) => {
     const publicId = process.env.publicId;
     const privateId = process.env.privateId;
     console.log('inside mtgSetUpdate router');
+    let offset = 0;
 
     const sqlText = `INSERT INTO set (id, name) VALUES ($1, $2)`;
-    axios.get(`https://api.tcgplayer.com/${version}/catalog/categories/1/groups?limit=1000`,{
+    axios.get(`https://api.tcgplayer.com/${version}/catalog/categories/1/groups?limit=1000&offset=${offset}`,{
         "headers": {
             "Authorization": `Bearer ${accessToken}`
         }
     })
     .then(response => {
-        console.log(response);
+        console.log(response.data.results.length);
         res.sendStatus(200);
     })
     .catch(error => {
