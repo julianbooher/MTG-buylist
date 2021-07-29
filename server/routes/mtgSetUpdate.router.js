@@ -5,7 +5,6 @@ const router = express.Router();
 require('dotenv').config();
 
 async function checkSet (groupId){
-    let responseLength = 0;
     const sqlText = "SELECT * FROM expansion WHERE id = $1";
     const response = await pool.query(sqlText, [groupId])
     if (response.rows.length > 0){
@@ -25,7 +24,6 @@ async function updateSets (results, req, res){
         for(let i = 0; i < results.length; i++){
             const result = await checkSet(results[i].groupId);
             if (result === false){
-                console.log('passed checkSet, before pool.query');
                 pool.query(insertText, [results[i].groupId, results[i].name])
                     .catch( error => {
                         console.log('error inserting set into database inside updateSets function', error);
@@ -48,7 +46,6 @@ function getSets(i, req, res){
     })
     .then(response => {
         totalSets = response.data.totalItems;
-        console.log('inside getSets, total sets', response.data.totalItems);
         updateSets(response.data.results, req, res);
         if(100 * i < totalSets ){
             setTimeout(function(){
@@ -68,8 +65,6 @@ function getSets(i, req, res){
 // Get list of MTG sets and update the database. 
 router.get('/', async (req, res) => {
 
-    // Environment variables for the API request.
-    console.log('inside mtgSetUpdate router');
     // Call getSets function which will make the API call to get the current set list.
     getSets(0, req, res);
     
