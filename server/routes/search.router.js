@@ -4,6 +4,35 @@ const axios = require('axios');
 const router = express.Router();
 require('dotenv').config();
 
+async function getCardDetails(cardList){
+
+    const requestText = `http://api.tcgplayer.com/${version}/pricing/product/`
+
+    // Append the cardList id's onto the end of the request
+    for (let i = 0; i < cardList.length; i++){
+        requestText += `${cardList[i]},`
+    }
+
+    // API request to tcgplayer for details about these particular cards.
+    axios.post(requestText, {
+        "headers": {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": 'application/json'
+        }
+    })
+    .catch( error => {
+        console.log('error inside getCardDetails function', error);
+    })
+};
+
+async function getCardSet(setId){
+
+};
+
+async function getCardPrices(cardList){
+
+}
+
 
 // Get list of search results from API call.
 router.get('/:searchPage/:searchValue', (req, res) => {
@@ -28,7 +57,7 @@ router.get('/:searchPage/:searchValue', (req, res) => {
             "Content-Type": 'application/json'
         }
     })
-    .then (response => {
+    .then( response => {
         res.send(response.data);
     })
     .catch( error => {
