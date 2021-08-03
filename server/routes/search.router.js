@@ -20,20 +20,22 @@ async function apiRequest(req, res){
             { "name": "ProductName", "values": [ req.params.searchValue ] }
         ]    
     };
-    
-    await axios.post(`https://api.tcgplayer.com/${version}/catalog/categories/1/search`, searchData, {
+
+    const headers = {
         "headers": {
             "Authorization": `Bearer ${accessToken}`,
             "Content-Type": 'application/json'
         }
-    })
-    .then( response => {
-        getCardDetails(response.data.results);
-    })
-    .catch( error => {
-        console.log('Error inside POST request in search', error);
-        res.sendStatus(500);
-    })
+    };
+    
+
+    try {
+        const results = await axios.post(`https://api.tcgplayer.com/${version}/catalog/categories/1/search`, searchData, headers)
+        return results;
+    } catch {
+        console.log('error in axios result in apiRequest function');
+    }
+    
 
 
 }
@@ -73,7 +75,9 @@ async function getCardPrices(cardList){
 // Get list of search results from API call.
 router.get('/:searchPage/:searchValue', async (req, res) => {
 
-    await apiRequest(req, res);
+    const results = await apiRequest(req, res);
+
+    console.log(results.data.results);
 
     res.sendStatus(200);
     
