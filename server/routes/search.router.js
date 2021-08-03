@@ -4,10 +4,44 @@ const axios = require('axios');
 const router = express.Router();
 require('dotenv').config();
 
+// Global variables from .env;
+const version = process.env.version;
+const accessToken = process.env.accessToken;
+
+async function apiRequest(req, res){
+
+    console.log('inside search router, params', req.params)
+
+    const searchData = {
+        "sort": "name",
+        "limit": 10,
+        "offset": req.params.searchPage - 1,
+        "filters": [
+            { "name": "ProductName", "values": [ req.params.searchValue ] }
+        ]    
+    };
+
+    const headers = {
+        "headers": {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": 'application/json'
+        }
+    };
+    
+
+    try {
+        const results = await axios.post(`https://api.tcgplayer.com/${version}/catalog/categories/1/search`, searchData, headers)
+        return results;
+    } catch {
+        console.log('error in axios result in apiRequest function');
+    }
+    
+
+
+}
+
 async function getCardDetails(cardList){
 
-    const version = process.env.version;
-    const accessToken = process.env.accessToken;
     let requestText = `http://api.tcgplayer.com/${version}/catalog/products/`;
 
     // Append the cardList id's onto the end of the request
@@ -39,36 +73,14 @@ async function getCardPrices(cardList){
 
 
 // Get list of search results from API call.
-router.get('/:searchPage/:searchValue', (req, res) => {
+router.get('/:searchPage/:searchValue', async (req, res) => {
 
-    const version = process.env.version;
-    const accessToken = process.env.accessToken;
+    const results = await apiRequest(req, res);
 
-    console.log('inside search router, params', req.params)
+    console.log(results.data.results);
 
-    const searchData = {
-        "sort": "name",
-        "limit": 10,
-        "offset": req.params.searchPage - 1,
-        "filters": [
-            { "name": "ProductName", "values": [ req.params.searchValue ] }
-        ]    
-    };
+    res.sendStatus(200);
     
-    axios.post(`https://api.tcgplayer.com/${version}/catalog/categories/1/search`, searchData, {
-        "headers": {
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-Type": 'application/json'
-        }
-    })
-    .then( response => {
-        getCardDetails(response.data.results);
-        res.send(response.data.results);
-    })
-    .catch( error => {
-        console.log('Error inside POST request in search', error);
-        res.sendStatus(500);
-    })
     
 });
 
