@@ -8,7 +8,7 @@ require('dotenv').config();
 const version = process.env.version;
 const accessToken = process.env.accessToken;
 
-async function apiRequest(req, res){
+async function getSearchResults(req, res){
 
     console.log('inside search router, params', req.params)
 
@@ -60,11 +60,20 @@ async function getCardDetails(cardList){
         console.log('error inside getCardDetails function', error);
     })
 
+    // Loop through results and append the plaintext card set to the object.
+    for (let i = 0; i < response.data.results.length; i++){
+        const cardSet =  await getCardSet(response.data.results[i].groupId);
+        response.data.results[i].setName = cardSet;
+    }
+
     console.log(response.data.results);
 };
 
 async function getCardSet(setId){
 
+    const sqlText = "SELECT * FROM expansion WHERE id = $1";
+    const response = await pool.query(sqlText, [setId])
+    return response.rows[0].name
 };
 
 async function getCardPrices(cardList){
@@ -75,10 +84,9 @@ async function getCardPrices(cardList){
 // Get list of search results from API call.
 router.get('/:searchPage/:searchValue', async (req, res) => {
 
-    const results = await apiRequest(req, res);
-
-    console.log(results.data.results);
-
+    const results = await getSearchResults(req, res);
+    let detailedResults = await getCardDetails(results.data.results);
+     
     res.sendStatus(200);
     
     
