@@ -98,8 +98,24 @@ async function getCardPrices(cardList){
         console.log('error inside getCardPrices function', error);
     })
 
+    const { results } = response.data
 
-    console.log(response.data.results);
+
+    for (let i = 0; i < results.length; i += 2){
+        if (results[i].subTypeName === 'Foil'){
+            cardList[i/2].foilMarketPrice = results[i].marketPrice;
+            cardList[i/2].foilLowPrice = results[i].lowPrice;
+            cardList[i/2].marketPrice = results[i + 1].marketPrice;
+            cardList[i/2].lowPrice = results[i + 1].lowPrice;
+        } else { 
+            cardList[i/2].foilMarketPrice = results[i + 1].marketPrice;
+            cardList[i/2].foilLowPrice = results[i + 1].lowPrice;
+            cardList[i/2].marketPrice = results[i].marketPrice;
+            cardList[i/2].lowPrice = results[i].lowPrice;
+        }
+    }
+
+    return cardList;
 }
 
 
@@ -111,7 +127,7 @@ router.get('/:searchPage/:searchValue', async (req, res) => {
     const financialResults = await getCardPrices(detailedResults);
     
      
-    res.sendStatus(200);
+    res.send(financialResults);
     
     
 });
