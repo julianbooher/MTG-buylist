@@ -32,8 +32,8 @@ async function getSearchResults(req, res){
     try {
         const results = await axios.post(`https://api.tcgplayer.com/${version}/catalog/categories/1/search`, searchData, headers)
         return results;
-    } catch {
-        console.log('error in axios result in apiRequest function');
+    } catch (error) {
+        console.log('error in axios result in apiRequest function', error);
     }
     
 
@@ -66,7 +66,7 @@ async function getCardDetails(cardList){
         response.data.results[i].setName = cardSet;
     }
 
-    console.log(response.data.results);
+    return response.data.results;
 };
 
 async function getCardSet(setId){
@@ -78,6 +78,44 @@ async function getCardSet(setId){
 
 async function getCardPrices(cardList){
 
+    
+    let requestText = `https://api.tcgplayer.com/${version}/pricing/product/`
+
+    // Append the IDs to the request text for the API call.
+    for (let i = 0; i < cardList.length; i++){
+        requestText += `${cardList[i].productId},`
+    }
+
+
+    // API request to tcgplayer for prices about these particular cards.
+    const response = await axios.get(requestText, {
+        "headers": {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type": 'application/json'
+        }
+    })
+    .catch( error => {
+        console.log('error inside getCardPrices function', error);
+    })
+
+    const { results } = response.data
+
+
+    for (let i = 0; i < results.length; i += 2){
+        if (results[i].subTypeName === 'Foil'){
+            cardList[i/2].foilMarketPrice = results[i].marketPrice;
+            cardList[i/2].foilLowPrice = results[i].lowPrice;
+            cardList[i/2].marketPrice = results[i + 1].marketPrice;
+            cardList[i/2].lowPrice = results[i + 1].lowPrice;
+        } else { 
+            cardList[i/2].foilMarketPrice = results[i + 1].marketPrice;
+            cardList[i/2].foilLowPrice = results[i + 1].lowPrice;
+            cardList[i/2].marketPrice = results[i].marketPrice;
+            cardList[i/2].lowPrice = results[i].lowPrice;
+        }
+    }
+
+    return cardList;
 }
 
 
@@ -85,9 +123,11 @@ async function getCardPrices(cardList){
 router.get('/:searchPage/:searchValue', async (req, res) => {
 
     const results = await getSearchResults(req, res);
-    let detailedResults = await getCardDetails(results.data.results);
+    const detailedResults = await getCardDetails(results.data.results);
+    const financialResults = await getCardPrices(detailedResults);
+    
      
-    res.sendStatus(200);
+    res.send(financialResults);
     
     
 });
