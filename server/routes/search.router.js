@@ -17,7 +17,10 @@ async function getSearchResults(req, res){
         "limit": 10,
         "offset": req.params.searchPage - 1,
         "filters": [
-            { "name": "ProductName", "values": [ req.params.searchValue ] }
+            { "name": "ProductName", "values": [ req.params.searchValue ] },
+            {"name": "RequiredTypeCb", "values": [
+                "Artifact", "Creature", "Enchantment", "Instant", "Land", "Legendary", "Planeswalker", "Sorcery"
+            ]}
         ]    
     };
 
@@ -100,6 +103,8 @@ async function getCardPrices(cardList){
 
     const { results } = response.data
 
+    console.log(results);
+
 
     for (let i = 0; i < results.length; i += 2){
         if (results[i].subTypeName === 'Foil'){
@@ -123,11 +128,15 @@ async function getCardPrices(cardList){
 router.get('/:searchPage/:searchValue', async (req, res) => {
 
     const results = await getSearchResults(req, res);
-    const detailedResults = await getCardDetails(results.data.results);
-    const financialResults = await getCardPrices(detailedResults);
+    if(results.data.results.length){
+        const detailedResults = await getCardDetails(results.data.results);
+        const financialResults = await getCardPrices(detailedResults);
+        res.send(financialResults);
+    } else {
+        res.send(false);
+    }
     
      
-    res.send(financialResults);
     
     
 });
