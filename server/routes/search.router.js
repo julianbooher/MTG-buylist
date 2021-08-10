@@ -105,7 +105,9 @@ async function getCardPrices(cardList){
 
     console.log(results);
 
-
+    // TODO - Refactor this to iterate over all results.
+    // For each result, use either .indexOf or .find to find the correct object to modify.
+    // Use if/else statement to see if search result is foil, add the correct corresponding value to that object.
     for (let i = 0; i < results.length; i += 2){
         if (results[i].subTypeName === 'Foil'){
             cardList[i/2].foilMarketPrice = results[i].marketPrice;
