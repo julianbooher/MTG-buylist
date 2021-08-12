@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Form, Button } from 'react-bootstrap';
 
 
 export default function SearchField(props) {
-
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('')
 
   const search = (event) => {
     event.preventDefault();
+
     console.log('inside search, searchQuery: ', searchQuery);
   }
 
