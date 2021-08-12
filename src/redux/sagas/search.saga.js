@@ -9,8 +9,9 @@ function* search(action) {
     try {
 
         // passes the username and password from the payload to the server
-        const searchResults = yield axios.post(`/api/search/${page}/${searchParameter}`);
-        yield put({type: 'SET_SEARCH_RESULTS', payload: searchResults});
+        const searchResults = yield axios.get(`/api/search/${page}/${searchParameter}`);
+        console.log(searchResults);
+        yield put({type: 'SET_SEARCH_RESULTS', payload: searchResults.data});
 
     } catch (error) {
         console.log('Error in searchSaga:', error);

@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Form, Button } from 'react-bootstrap';
 
 
 export default function SearchField(props) {
   const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchParameter, setSearchParameter] = useState('')
 
   const search = (event) => {
     event.preventDefault();
-
-    console.log('inside search, searchQuery: ', searchQuery);
+    dispatch({ type: 'SEARCH', payload: { searchParameter: searchParameter, page: 1 } })
+    console.log('inside search, searchQuery: ', searchParameter);
   }
 
   return (
@@ -25,8 +25,8 @@ export default function SearchField(props) {
           <Form.Control
             type="text"
             placeholder="Search for a card name."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+            value={searchParameter}
+            onChange={e => setSearchParameter(e.target.value)}
           />
         </Form.Group>
         <Button
