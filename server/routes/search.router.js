@@ -10,15 +10,15 @@ const accessToken = process.env.accessToken;
 
 async function getSearchResults(req, res){
 
-    console.log('inside search router, params', req.params)
-
+    
     const searchData = {
         "sort": "name",
         "limit": 10,
         "offset": req.params.searchPage - 1,
+        // RequiredTypeCb was added to filters because if that didn't exist, we were getting products as results (e.g. boosters, starters).
         "filters": [
             { "name": "ProductName", "values": [ req.params.searchValue ] },
-            {"name": "RequiredTypeCb", "values": [
+            { "name": "RequiredTypeCb", "values": [
                 "Artifact", "Creature", "Enchantment", "Instant", "Land", "Legendary", "Planeswalker", "Sorcery"
             ]}
         ]    
@@ -74,6 +74,9 @@ async function getCardDetails(cardList){
 
 async function getCardSet(setId){
 
+    // Queries the local DB of card sets to get the name of the set.
+    // Doing this from the API would be incredibly taxing on the # of calls and speed.
+
     const sqlText = "SELECT * FROM expansion WHERE id = $1";
     const response = await pool.query(sqlText, [setId])
     return response.rows[0].name
@@ -103,15 +106,13 @@ async function getCardPrices(cardList){
 
     const { results } = response.data
 
-    console.log(cardList);
-
-    // TODO - Refactor this to iterate over all results.
-    // For each result, use either .indexOf or .find to find the correct object to modify.
-    // Use if/else statement to see if search result is foil, add the correct corresponding value to that object.
+    // Loop over the results of the search for card prices, append those prices to the appropriate objects in cardList array.
     for (let i = 0; i < results.length; i++){
 
+        // Using the productId's this finds the correct index in cardList where we'll append the price.
         let arrayIndex = cardList.findIndex(j => j.productId === results[i].productId);
 
+        // Check to see if the price is for foil or regular, append the appropriate key:value.
         if (results[i].subTypeName === 'Foil'){
             cardList[arrayIndex].foilMarketPrice = results[i].marketPrice;
             cardList[arrayIndex].foilLowPrice = results[i].lowPrice;
