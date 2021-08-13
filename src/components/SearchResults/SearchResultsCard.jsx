@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap';
+import './SearchResultsCard.css';
 
 export default function SearchResultsCard(props) {
 
@@ -7,16 +8,24 @@ export default function SearchResultsCard(props) {
 
 
     return (
-        <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={imageUrl} />
+        <Card className='card-card' style={{ width: '18rem' }}>
+            <Card.Title className='card-title'>{cleanName}</Card.Title>
+            <Card.Img className='card-image' variant="top" src={imageUrl} />
             <Card.Body>
-                <Card.Title>{cleanName}</Card.Title>
                 <Card.Text>
-                    <p><b>Set: </b>{setName}</p>
-                    <p><b>Market Price: </b>{marketPrice}</p>
-                    <p><b>Foil Market Price:</b> {foilMarketPrice}</p>
-                    <p><b>Low Price:</b> {lowPrice}</p>
-                    <p><b>Foil Low Price:</b> {foilLowPrice}</p>
+                    Set: {setName}
+                </Card.Text>
+                <Card.Text>
+                    Market Price: {marketPrice}
+                </Card.Text>
+                <Card.Text>
+                    Foil Market Price: {foilMarketPrice}
+                </Card.Text>
+                <Card.Text>
+                    Low Price: {lowPrice}
+                </Card.Text>
+                <Card.Text>
+                    Foil Low Price: {foilLowPrice}
                 </Card.Text>
                 <Button variant="primary">Add to Buylist</Button>
             </Card.Body>
