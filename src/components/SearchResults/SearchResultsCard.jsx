@@ -8,7 +8,7 @@ export default function SearchResultsCard(props) {
 
 
     return (
-        <Card className='card-card' style={{ width: '18rem' }}>
+        <Card className='card-card'>
             <Card.Title className='card-title'>{cleanName}</Card.Title>
             <Card.Img className='card-image' variant="top" src={imageUrl} />
             <Card.Body>
