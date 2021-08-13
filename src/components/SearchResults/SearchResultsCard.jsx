@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap';
+import './SearchResultsCard.css';
 
 export default function SearchResultsCard(props) {
 
@@ -8,7 +9,7 @@ export default function SearchResultsCard(props) {
 
     return (
         <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={imageUrl} />
+            <Card.Img className='card-image' variant="top" src={imageUrl} />
             <Card.Body>
                 <Card.Title>{cleanName}</Card.Title>
                 <Card.Text>
