@@ -1,3 +1,12 @@
+.card-title {
+    text-align: center;
+}
+
 .card-image {
-    max-width: 200px;
+    max-width: 150px;
+    margin-left: 20px;
+}
+
+.card-card p {
+    margin-bottom: 3px;
 }
