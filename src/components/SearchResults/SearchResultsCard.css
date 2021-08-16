@@ -3,8 +3,13 @@
 }
 
 .card-image {
-    max-width: 150px;
-    margin-left: 20px;
+    /* max-width: 100px; */
+}
+
+.card-image-col {}
+
+.card-body {
+    font-size: .75rem;
 }
 
 .card-card p {
