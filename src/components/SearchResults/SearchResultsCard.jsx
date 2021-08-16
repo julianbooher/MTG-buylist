@@ -4,12 +4,14 @@ import './SearchResultsCard.css';
 
 export default function SearchResultsCard(props) {
 
-    const { productId, cleanName, imageUrl, setName, url, marketPrice, lowPrice, foilMarketPrice, foilLowPrice } = props.searchResult;
+    const { productId, name, imageUrl, setName, url, marketPrice, lowPrice, foilMarketPrice, foilLowPrice } = props.searchResult;
 
 
     return (
         <Card className='card-card'>
-            <Card.Title className='card-title'>{cleanName}</Card.Title>
+            <Card.Title className='card-title'>
+                <a href={url} target="_blank">{name}</a>
+            </Card.Title>
             <Card.Img className='card-image' variant="top" src={imageUrl} />
             <Card.Body>
                 <Card.Text>
