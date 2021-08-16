@@ -15,19 +15,19 @@ export default function SearchResultsCard(props) {
             <Card.Img className='card-image' variant="top" src={imageUrl} />
             <Card.Body>
                 <Card.Text>
-                    Set: {setName}
-                </Card.Text>
-                <Card.Text>
-                    Market Price: {marketPrice}
-                </Card.Text>
-                <Card.Text>
-                    Foil Market Price: {foilMarketPrice}
+                    <b>{setName}</b>
                 </Card.Text>
                 <Card.Text>
                     Low Price: {lowPrice}
                 </Card.Text>
                 <Card.Text>
+                    Market Price: {marketPrice}
+                </Card.Text>
+                <Card.Text>
                     Foil Low Price: {foilLowPrice}
+                </Card.Text>
+                <Card.Text>
+                    Foil Market Price: {foilMarketPrice}
                 </Card.Text>
                 <Button variant="primary">Add to Buylist</Button>
             </Card.Body>
