@@ -16,7 +16,7 @@ export default function SearchResults(props) {
       <Container>
         <Row>
           {searchResults.map((searchResult, i) => {
-            return <Col xs={12} md={3}><SearchResultsCard key={i} searchResult={searchResult} /></Col>
+            return <Col xs={12} md={4}><SearchResultsCard key={i} searchResult={searchResult} /></Col>
           })}
 
         </Row>
