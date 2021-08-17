@@ -18,11 +18,8 @@ export default function SearchResults(props) {
           {searchResults.map((searchResult, i) => {
             return <Col xs={12} md={4}><SearchResultsCard key={i} searchResult={searchResult} /></Col>
           })}
-
         </Row>
-
       </Container>
-
     </div>
   );
 }
