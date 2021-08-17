@@ -41,7 +41,10 @@ export default function SearchResultsCard(props) {
                             <Card.Text>
                                 Foil Market Price: {foilMarketPrice}
                             </Card.Text>
-                            <Button variant="primary" onClick={addToBuylist(productId)}>Add to Buylist</Button>
+                            <Button variant="primary" onClick={() => {
+                                addToBuylist(productId)
+                            }
+                            }>Add to Buylist</Button>
                         </Card.Body>
                     </Col>
                 </Row>
