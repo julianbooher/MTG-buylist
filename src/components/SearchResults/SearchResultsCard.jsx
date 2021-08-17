@@ -10,12 +10,12 @@ export default function SearchResultsCard(props) {
     return (
         <Card className='card-card'>
             <Card.Title className='card-title'>
-                <a href={url} target="_blank">{name}</a>
+                <a href={url} target="_blank" rel="noopener noreferrer">{name} </a>
             </Card.Title>
             <Container>
                 <Row>
                     <Col className="card-image-col" xs={4}>
-                        <img className="card-image" src={imageUrl} />
+                        <img className="card-image" src={imageUrl} alt={name} />
                     </Col>
                     <Col xs={8}>
                         <Card.Body className="card-body">
