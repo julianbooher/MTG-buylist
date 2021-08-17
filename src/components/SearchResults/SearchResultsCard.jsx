@@ -1,10 +1,17 @@
 import React from 'react';
 import { Card, Button, Container, Col, Row } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import './SearchResultsCard.css';
 
 export default function SearchResultsCard(props) {
 
     const { productId, name, imageUrl, setName, url, marketPrice, lowPrice, foilMarketPrice, foilLowPrice } = props.searchResult;
+
+    const dispatch = useDispatch();
+
+    const addToBuylist = (productId) => {
+        dispatch({ type: 'ADD_TO_BUYLIST', payload: productId });
+    }
 
 
     return (
@@ -34,7 +41,7 @@ export default function SearchResultsCard(props) {
                             <Card.Text>
                                 Foil Market Price: {foilMarketPrice}
                             </Card.Text>
-                            <Button variant="primary">Add to Buylist</Button>
+                            <Button variant="primary" onClick={addToBuylist(productId)}>Add to Buylist</Button>
                         </Card.Body>
                     </Col>
                 </Row>
