@@ -14,3 +14,9 @@ CREATE TABLE "expansion" (
   "id" SERIAL PRIMARY KEY,
   "name" VARCHAR UNIQUE NOT NULL
 );
+
+CREATE TABLE "buylist" (
+  "card_id" SERIAL PRIMARY KEY,
+  "timestamp" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  "copies" INT DEFAULT 1
+);
