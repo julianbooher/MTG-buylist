@@ -11,6 +11,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const mtgSetUpdateRouter = require('./routes/mtgSetUpdate.router');
 const searchRouter = require('./routes/search.router');
+const buylistRouter = require('./routes/buylist.router');
 
 
 // Body parser middleware
@@ -28,6 +29,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/mtgSetUpdate', mtgSetUpdateRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/buylist', buylistRouter);
 
 // Serve static files
 app.use(express.static('build'));
